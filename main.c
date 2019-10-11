@@ -28,7 +28,7 @@ int main(){
     tijolo.i = 0;
     tijolo.j = COLUMNS/2;
     tijolo.tipo = TIPO_I;
-    tijolo.orientacao = ORIENTACAO_UP;
+    tijolo.orientacao = ORIENTACAO_LEFT;
     tijolo.width = 1;
     tijolo.height = 4;
     //inicializando matriz
@@ -47,38 +47,14 @@ int main(){
         #endif
 
         //posicionar o @ no meio da tela
-        switch (tijolo.orientacao){
-            case ORIENTACAO_UP:
-                if (tijolo.i-3>=0) matrix[tijolo.i-3][tijolo.j] = PIXEL;
-                if (tijolo.i-2>=0) matrix[tijolo.i-2][tijolo.j] = PIXEL;
-                if (tijolo.i-1>=0) matrix[tijolo.i-1][tijolo.j] = PIXEL;
-                matrix[tijolo.i][tijolo.j] = PIXEL;
-            break;
-            case ORIENTACAO_LEFT:
-                if (tijolo.i-3>=0) matrix[tijolo.i][tijolo.j-3] = PIXEL;
-                if (tijolo.i-2>=0) matrix[tijolo.i][tijolo.j-2] = PIXEL;
-                if (tijolo.i-1>=0) matrix[tijolo.i][tijolo.j-1] = PIXEL;
-                matrix[tijolo.i][tijolo.j] = PIXEL;
-            break;
-        }
+        drawBar(matrix, tijolo, PIXEL);
+
         //mostro a matriz na tela
         printMatrix(matrix);
 
         //faça posição anterior do @ ser apagada
-        switch (tijolo.orientacao){
-            case ORIENTACAO_UP:
-                if (tijolo.i-3>=0) matrix[tijolo.i-3][tijolo.j] = EMPY;
-                if (tijolo.i-2>=0) matrix[tijolo.i-2][tijolo.j] = EMPY;
-                if (tijolo.i-1>=0) matrix[tijolo.i-1][tijolo.j] = EMPY;
-                matrix[tijolo.i][tijolo.j] = EMPY;
-            break;
-            case ORIENTACAO_LEFT:
-                if (tijolo.i-3>=0) matrix[tijolo.i][tijolo.j-3] = EMPY;
-                if (tijolo.i-2>=0) matrix[tijolo.i][tijolo.j-2] = EMPY;
-                if (tijolo.i-1>=0) matrix[tijolo.i][tijolo.j-1] = EMPY;
-                matrix[tijolo.i][tijolo.j] = EMPY;
-            break;
-        }
+        drawBar(matrix, tijolo, EMPY);
+    
         //faço a posição da @ ir para a baixo
         if(tijolo.i < (ROWS-1)) tijolo.i++;
 
@@ -100,6 +76,12 @@ int main(){
             case TECLA_D:
                 if(tijolo.j < (COLUMNS - 1)) tijolo.j++;
             break;
+            //muda a direcao 
+            case TECLA_ESPACO:
+                if(tijolo.orientacao==ORIENTACAO_RIGHT)
+                    tijolo.orientacao = ORIENTACAO_UP;
+                else 
+                    tijolo.orientacao++;
         }
 
     }
