@@ -29,8 +29,8 @@ int main(){
     tijolo.j = COLUMNS/2;
     tijolo.tipo = TIPO_I;
     tijolo.orientacao = ORIENTACAO_LEFT;
-    tijolo.width = 1;
-    tijolo.height = 4;
+    tijolo.width = 5;
+    tijolo.height = 1;
     //inicializando matriz
     init(matrix);
 
@@ -43,7 +43,9 @@ int main(){
         gotoxy(0,0);
 
         #if DEBUG == 1
-            printf("PIXEL = (%d,%d)\n\n", tijolo.i, tijolo.j);
+            printf("Posicao = (%d,%d)\n\n", tijolo.i, tijolo.j);
+            printf("Dimensao = (%d,%d)\n\n", tijolo.width, tijolo.height);
+
         #endif
 
         //posicionar o @ no meio da tela
@@ -68,13 +70,13 @@ int main(){
             case LEFT: 
             case TECLA_a:
             case TECLA_A:
-                if(tijolo.j > 0) tijolo.j--;
+                if(tijolo.j - (tijolo.width/2) > 0) tijolo.j--;
             break;
             //se move para direita
             case RIGHT:
             case TECLA_d: 
             case TECLA_D:
-                if(tijolo.j < (COLUMNS - 1)) tijolo.j++;
+                if(tijolo.j +  (tijolo.width/2) < (COLUMNS - 1)) tijolo.j++;
             break;
             //muda a direcao 
             case TECLA_ESPACO:
@@ -82,6 +84,17 @@ int main(){
                     tijolo.orientacao = ORIENTACAO_UP;
                 else 
                     tijolo.orientacao++;
+                
+                //inverte as dimensoes do tijolo
+                int aux = tijolo.width;
+                tijolo.width = tijolo.height;
+                tijolo.height = aux;
+
+                //resolvendo bug dos cantos
+                if(tijolo.j < (tijolo.width/2))
+                    tijolo.j = tijolo.width/2;
+                else if (tijolo.j > COLUMNS - (tijolo.width/2) - 1)
+                    tijolo.j  = COLUMNS - (tijolo.width/2) -1;
         }
 
     }
