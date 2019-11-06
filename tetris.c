@@ -125,14 +125,25 @@ void rotate(Bloco *bloco){
     Verifica a colisao de Blocos
 */
 int collisionDetect(char matrix[ROWS][COLUMNS], Bloco barra){
-    int retorno = 1;
+    int retorno = 0;
 
     if (!collisionDetect(matrix, barra))
         drawBar(matrix, barra, EMPY);
 
     //Colisao com a base
-    if((barra.i + barra.height/2) >= (ROWS-1))
-           retorno = 0;
+    if((barra.i + 1) >= (ROWS))
+           retorno = 1;
+    //Colisao com a peça
+    if (matrix [barra.i + 1][barra.j] != EMPY){
+        retorno = 1;
+    }
+    int t2 = barra.width/2;
+    if (matrix [barra.i + 1][barra.j+t2] != EMPY) {
+        retorno = 1;
+    }
+    if (matrix [barra.i+ 1][barra.j-t2] != EMPY) {
+        retorno = 1;
+    }
     
     return retorno;
 }

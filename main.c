@@ -79,13 +79,17 @@ int main(){
             case LEFT: 
             case TECLA_a:
             case TECLA_A:
-                if(tijolo.j - (tijolo.width/2) > 0) tijolo.j--;
+                if(tijolo.j - (tijolo.width/2) > 0) 
+                    if(matrix[tijolo.i][tijolo.j - (tijolo.width/2) - 1] == EMPY)
+                        tijolo.j--;//esquerda
             break;
             //se move para direita
             case RIGHT:
             case TECLA_d: 
             case TECLA_D:
                 if(tijolo.j +  (tijolo.width/2) < (COLUMNS - 1)) tijolo.j++;
+                    if(matrix[tijolo.i][tijolo.j + (tijolo.width/2) + 1] == EMPY)
+                        tijolo.j++;//direita
             break;
             //muda a direcao 
             case TECLA_ESPACO:
