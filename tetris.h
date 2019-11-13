@@ -41,6 +41,10 @@
 //configurações de layout
 #define PIXEL 219
 #define EMPY 32
+//Mecanismo de colisão
+#define CHECK_SIDE 1
+#define UNCHECK_SIDE 0
+#define NONE 0
 
 //Estrutura padrão de componentes
 typedef struct{
@@ -86,4 +90,10 @@ void rotate(Bloco *bloco);
 */
 
 int collisionDetect(char matrix[ROWS][COLUMNS], Bloco barra);
+
+/*
+    Verifica a colisao das Barras
+*/
+
+int collisionBar(char matrix[ROWS][COLUMNS], Bloco barra, int collideSides, int side);
 

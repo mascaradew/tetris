@@ -120,7 +120,6 @@ void rotate(Bloco *bloco){
         bloco->j  = COLUMNS - (bloco->width/2) -1;
 }
 
-
 /*
     Verifica a colisao de Blocos
 */
@@ -131,7 +130,7 @@ int collisionDetect(char matrix[ROWS][COLUMNS], Bloco barra){
         drawBar(matrix, barra, EMPY);
 
     //Colisao com a base
-    if((barra.i + 1) >= (ROWS))
+    if((barra.i + 1) >= ROWS)
            retorno = 1;
     //Colisao com a peça
     if (matrix [barra.i + 1][barra.j] != EMPY){
@@ -145,5 +144,60 @@ int collisionDetect(char matrix[ROWS][COLUMNS], Bloco barra){
         retorno = 1;
     }
     
+    return retorno;
+}
+
+/*
+    Verifica a colisao das Barras
+*/
+
+int collisionBar(char matrix[ROWS][COLUMNS], Bloco barra, int collideSides, int side){
+    int retorno = 0;
+
+    //Colisao com a base
+    if((barra.i + 1) >= ROWS)
+           retorno = 1;
+
+     //Colisao com a base da barra com outras peças
+    if (matrix [barra.i + 1][barra.j] != EMPY)
+        retorno = 1;
+
+    //Colisão base horizontal
+    int t2 = barra.width/2;
+    if (matrix [barra.i + 1][barra.j+t2] != EMPY) 
+        retorno = 1;
+    
+    if (matrix [barra.i+ 1][barra.j-t2] != EMPY) 
+        retorno = 1;
+    
+    //Colisão lateral horizontal
+    if(collideSides==1){
+        if(side==RIGHT && matrix[barra.i][barra.j + t2 + 1] != EMPY)
+            retorno = 1;
+        if(side==RIGHT && barra.j + t2 + 1 >= COLUMNS)
+            retorno = 1;
+
+        if(side==LEFT && matrix[barra.i][barra.j - t2 - 1] != EMPY)
+            retorno = 1;
+        if(side==LEFT && barra.j - t2 - 1 < 0)
+            retorno = 1;
+    }
+    //Colisão lateral vertical
+    if(collideSides==CHECK_SIDE &&
+        (barra.orientacao == ORIENTACAO_UP ||
+            barra.orientacao == ORIENTACAO_DOWN)){
+        
+        int i;
+        for(i=0; i<barra.height; i++){
+            //verificanfo colisão lateral com resto de outras peças
+            if(side==RIGHT && matrix[barra.i - i][barra.j + 1] != EMPY)
+                retorno = 1;
+            
+            if(side==LEFT && matrix[barra.i - i][barra.j - 1] != EMPY)
+                retorno = 1;
+        }
+        }
+
+
     return retorno;
 }

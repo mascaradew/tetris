@@ -47,27 +47,29 @@ int main(){
             printf("Dimensao = (%d,%d)\n\n", tijolo.width, tijolo.height);
 
         #endif
-
-        //posicionar o @ no meio da tela
+   
         drawBar(matrix, tijolo, PIXEL);
-
+            
         //mostro a matriz na tela
         printMatrix(matrix);
-
+          //posicionar o @ no meio da tela
+        if (!collisionBar(matrix, tijolo, UNCHECK_SIDE, NONE)){
+            drawBar(matrix, tijolo, EMPY);
+            tijolo.i++;
         //faça posição anterior do @ ser apagada
 
-        if((tijolo.i + tijolo.height/2) < (ROWS-1)){
-            drawBar(matrix, tijolo, EMPY);
+       // if((tijolo.i + tijolo.height/2) < (ROWS-1)){
+        //    drawBar(matrix, tijolo, EMPY);
 
             //faça posição anterior do @ ser apagada
-            if(tijolo.i < (ROWS-1)) tijolo.i++;
+           // if(tijolo.i < (ROWS-1)) tijolo.i++;
 
         }else{
             initBar(&tijolo);
         }
     
         //faço a posição da @ ir para a baixo
-        if(tijolo.i < (ROWS-1)) tijolo.i++;
+        //if(tijolo.i < (ROWS-1)) tijolo.i++;
 
         //lendo teclas
         keypressed = 0;
@@ -79,16 +81,14 @@ int main(){
             case LEFT: 
             case TECLA_a:
             case TECLA_A:
-                if(tijolo.j - (tijolo.width/2) > 0) 
-                    if(matrix[tijolo.i][tijolo.j - (tijolo.width/2) - 1] == EMPY)
+                if(!collisionBar(matrix, tijolo, CHECK_SIDE, LEFT))
                         tijolo.j--;//esquerda
             break;
             //se move para direita
             case RIGHT:
             case TECLA_d: 
             case TECLA_D:
-                if(tijolo.j +  (tijolo.width/2) < (COLUMNS - 1)) tijolo.j++;
-                    if(matrix[tijolo.i][tijolo.j + (tijolo.width/2) + 1] == EMPY)
+                if(!collisionBar(matrix, tijolo, CHECK_SIDE, RIGHT))
                         tijolo.j++;//direita
             break;
             //muda a direcao 
